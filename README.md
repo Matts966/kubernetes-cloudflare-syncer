@@ -6,7 +6,7 @@ Currently we support syncing IPs on GKE and GCE.
 
 For GKE, please read [./pkg/gke](./pkg/gke).
 
-For GCE, please read [./pkg/gce](./pkg/gce).
+For GCE, please read [./pkg/gcloud](./pkg/gcloud).
 
 You can implement any other way to get IPs on cluster by implementing the `interface` below.
 
