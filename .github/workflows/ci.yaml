@@ -21,7 +21,7 @@ jobs:
           tag_with_ref: true
           dockerfile: Dockerfile
           cache_froms: matts966/kubernetes-cloudflare-syncer/gcloud:latest
-          args: ./pkg/gcloud/
+          path: ./pkg/gcloud/
   gke-image:
     name: Push image to GitHub Packages
     runs-on: ubuntu-latest
@@ -42,4 +42,4 @@ jobs:
           tag_with_ref: true
           dockerfile: Dockerfile
           cache_froms: matts966/kubernetes-cloudflare-syncer/gke:latest
-          args: ./pkg/gke/
+          path: ./pkg/gke/
