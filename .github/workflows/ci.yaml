@@ -20,8 +20,8 @@ jobs:
           repository: matts966/kubernetes-cloudflare-syncer/gcloud
           tag_with_ref: true
           dockerfile: Dockerfile
-          context: ./pkg/gcloud/
           cache_froms: matts966/kubernetes-cloudflare-syncer/gcloud:latest
+          args: ./pkg/gcloud/
   gke-image:
     name: Push image to GitHub Packages
     runs-on: ubuntu-latest
@@ -41,5 +41,5 @@ jobs:
           repository: matts966/kubernetes-cloudflare-syncer/gke
           tag_with_ref: true
           dockerfile: Dockerfile
-          context: ./pkg/gke/
           cache_froms: matts966/kubernetes-cloudflare-syncer/gke:latest
+          args: ./pkg/gke/
