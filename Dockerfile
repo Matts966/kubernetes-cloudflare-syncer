@@ -30,4 +30,4 @@ COPY --from=build /bin/kubernetes-cloudflare-syncer /bin/kubernetes-cloudflare-s
 
 USER nobody
 
-ENTRYPOINT ["/bin/kubernetes-cloudflare-syncer"]
+ENTRYPOINT ["/bin/kubernetes-cloudflare-syncer", "-logtostderr"]
