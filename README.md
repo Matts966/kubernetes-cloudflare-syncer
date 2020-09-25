@@ -18,7 +18,7 @@ You can implement any other way to get IPs on cluster by implementing the `inter
 // IP address.
 type IPLister interface {
 	Setup()
-	List() []string, error
+	List() ([]string, error)
 }
 ```
 

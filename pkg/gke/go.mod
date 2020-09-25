@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	cloud.google.com/go v0.66.0 // indirect
-	github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200924174805-11b2f6f6bfc4
+	github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200925204922-9c657896115f
 	github.com/cloudflare/cloudflare-go v0.8.5
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect

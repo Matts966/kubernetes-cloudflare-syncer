@@ -38,6 +38,8 @@ github.com/Matts966/kubernetes-cloudflare-syncer v0.0.0-20200924165714-e21e9aec7
 github.com/Matts966/kubernetes-cloudflare-syncer v0.0.0-20200924165714-e21e9aec79b7/go.mod h1:3M5F0DhxycEhehihBSa3VThsiZW2yK88DbUExW2sDeM=
 github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200924174805-11b2f6f6bfc4 h1:jp1hhl+c3MgVt5q3r5Nbtnp/BmB6PU7D6Qz5t26ntH0=
 github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200924174805-11b2f6f6bfc4/go.mod h1:1i6jvsyNzQkfTciRt2L1v20GHxQEkL6D5wEzqY22y10=
+github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200925204922-9c657896115f h1:vZ577cK2O92v4vhSGVMGphVG81IwCVRL0K+LGxU74ec=
+github.com/Matts966/kubernetes-cloudflare-syncer/pkg/core v0.0.0-20200925204922-9c657896115f/go.mod h1:1i6jvsyNzQkfTciRt2L1v20GHxQEkL6D5wEzqY22y10=
 github.com/NYTimes/gziphandler v0.0.0-20170623195520-56545f4a5d46/go.mod h1:3wb06e3pkSAbeQ52E9H9iFoQsEEwGN64994WTCIhntQ=
 github.com/PuerkitoBio/purell v1.0.0/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
 github.com/PuerkitoBio/urlesc v0.0.0-20160726150825-5bd2802263f2/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=

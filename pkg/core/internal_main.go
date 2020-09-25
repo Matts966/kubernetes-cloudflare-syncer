@@ -34,7 +34,7 @@ var options = struct {
 // IP address.
 type IPLister interface {
 	Setup()
-	List() []string, error
+	List() ([]string, error)
 }
 
 func Main(iplister IPLister) {
