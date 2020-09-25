@@ -27,6 +27,10 @@ jobs:
     name: Push image to GitHub Container Registry
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
       - uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: matts966/kubernetes-cloudflare-syncer/gcloud:latest
@@ -63,6 +67,10 @@ jobs:
     name: Push image to GitHub Container Registry
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
       - uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: matts966/kubernetes-cloudflare-syncer/gke:latest
