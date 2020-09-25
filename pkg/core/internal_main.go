@@ -34,7 +34,7 @@ var options = struct {
 // IP address.
 type IPLister interface {
 	Setup()
-	List() []string
+	List() []string, error
 }
 
 func Main(iplister IPLister) {
@@ -93,7 +93,11 @@ func Main(iplister IPLister) {
 	resync := func() {
 		log.Println("resyncing")
 
-		ips := iplister.List()
+		ips, err := iplister.List()
+		if err != nil {
+			log.Println("failed to list ip", err)
+			return
+		}
 
 		sort.Strings(ips)
 		log.Println("ips:", ips)

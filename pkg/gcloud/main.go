@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strconv"
 
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
@@ -40,31 +41,33 @@ func (gcloud_ip_lister *gcloud_ip_lister) Setup() {
 	gcloud_ip_lister.service = computeService
 }
 
-func (gcloud_ip_lister *gcloud_ip_lister) List() []string {
+func (gcloud_ip_lister *gcloud_ip_lister) List() ([]string, error) {
 	var ips []string
 	zoneListCall := gcloud_ip_lister.service.Zones.List(options.Project)
 	zoneList, err := zoneListCall.Do()
 	if err != nil {
-		log.Println("Error", err)
-	} else {
-		for _, zone := range zoneList.Items {
-			instanceListCall := gcloud_ip_lister.service.Instances.List(options.Project, zone.Name)
-			instanceListCall.Filter(options.Filter)
-			instanceList, err := instanceListCall.Do()
-			if err != nil {
-				log.Println("Error", err)
-			} else {
-				for _, instance := range instanceList.Items {
-					for _, networkInterface := range instance.NetworkInterfaces {
-						for _, accessConfig := range networkInterface.AccessConfigs {
-							ips = append(ips, accessConfig.NatIP)
-						}
-					}
+		return nil, err
+	}
+	for _, zone := range zoneList.Items {
+		instanceListCall := gcloud_ip_lister.service.Instances.List(options.Project, zone.Name)
+		unquotedFilter, err := strconv.Unquote(options.Filter)
+		if err != nil {
+			return nil, err
+		}
+		instanceListCall.Filter(unquotedFilter)
+		instanceList, err := instanceListCall.Do()
+		if err != nil {
+			return nil, err
+		}
+		for _, instance := range instanceList.Items {
+			for _, networkInterface := range instance.NetworkInterfaces {
+				for _, accessConfig := range networkInterface.AccessConfigs {
+					ips = append(ips, accessConfig.NatIP)
 				}
 			}
 		}
 	}
-	return ips
+	return ips, nil
 }
 
 func main() {

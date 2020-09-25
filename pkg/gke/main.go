@@ -63,10 +63,10 @@ func (gke_ip_lister *gke_ip_lister) Setup() {
 	gke_ip_lister.lister = factory.Core().V1().Nodes().Lister()
 }
 
-func (gke_ip_lister *gke_ip_lister) List() []string {
+func (gke_ip_lister *gke_ip_lister) List() ([]string, error) {
 	nodes, err := gke_ip_lister.lister.List(gke_ip_lister.nodeSelector)
 	if err != nil {
-		log.Println("failed to list nodes", err)
+		return nil, err
 	}
 
 	var ips []string
@@ -92,7 +92,7 @@ func (gke_ip_lister *gke_ip_lister) List() []string {
 			}
 		}
 	}
-	return ips
+	return ips, nil
 }
 
 func nodeIsReady(node *k8s_core_v1.Node) bool {
