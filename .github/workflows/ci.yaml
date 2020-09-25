@@ -1,7 +1,7 @@
 name: ci
 on: push
 jobs:
-  gcloud-image:
+  gcloud-image-gpr:
     name: Push image to GitHub Packages
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,22 @@ jobs:
           dockerfile: Dockerfile
           cache_froms: matts966/kubernetes-cloudflare-syncer/gcloud:latest
           path: ./pkg/gcloud/
-  gke-image:
+
+  gcloud-image-ghcr:
+    name: Push image to GitHub Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: matts966/kubernetes-cloudflare-syncer/gcloud:latest
+          tag: latest
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR }}
+          dockerfile: Dockerfile
+          directory: ./pkg/gcloud/
+
+  gke-image-gpr:
     name: Push image to GitHub Packages
     runs-on: ubuntu-latest
     steps:
@@ -43,3 +58,17 @@ jobs:
           dockerfile: Dockerfile
           cache_froms: matts966/kubernetes-cloudflare-syncer/gke:latest
           path: ./pkg/gke/
+
+  gke-image-ghcr:
+    name: Push image to GitHub Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: matts966/kubernetes-cloudflare-syncer/gke:latest
+          tag: latest
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR }}
+          dockerfile: Dockerfile
+          directory: ./pkg/gke/
