@@ -33,7 +33,7 @@ jobs:
           ref: ${{ github.ref }}
       - uses: mr-smithers-excellent/docker-build-push@v4
         with:
-          image: matts966/kubernetes-cloudflare-syncer/gcloud:latest
+          image: matts966/kubernetes-cloudflare-syncer/gcloud
           tag: latest
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -73,7 +73,7 @@ jobs:
           ref: ${{ github.ref }}
       - uses: mr-smithers-excellent/docker-build-push@v4
         with:
-          image: matts966/kubernetes-cloudflare-syncer/gke:latest
+          image: matts966/kubernetes-cloudflare-syncer/gke
           tag: latest
           registry: ghcr.io
           username: ${{ github.repository_owner }}
