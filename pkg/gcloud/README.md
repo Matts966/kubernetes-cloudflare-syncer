@@ -29,8 +29,8 @@ spec:
         image: ghcr.io/matts966/kubernetes-cloudflare-syncer/gcloud:latest
         args:
         - --dns-name=[[[kubernetes.example.com]]]
-        - --projects=[[[your-project]]]
-        - --filters="status = RUNNING"
+        - --project=[[[your-project]]]
+        - --filter="status = RUNNING"
         env:
         - name: CF_API_KEY
           valueFrom:
@@ -53,7 +53,7 @@ spec:
           secretName: iplister-gcp-cred
 ```
 
-**Important:** Make sure to replace `--projects=your-project` and `--dns-name=kubernetes.example.com`. You can use `--filters` flag to filter instances
+**Important:** Make sure to replace `--project=your-project` and `--dns-name=kubernetes.example.com`. You can use `--filter` flag to filter instances
 
 This syncer needs three types of permissions:
 1. talk to cloudflare and update DNS
