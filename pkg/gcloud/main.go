@@ -4,7 +4,6 @@ import (
 	"flag"
 	"log"
 	"os"
-	"strings"
 
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
@@ -49,8 +48,8 @@ func (gcloud_ip_lister *gcloud_ip_lister) List() []string {
 		log.Println("Error", err)
 	} else {
 		for _, zone := range zoneList.Items {
-			instanceListCall := gcloud_ip_lister.service.Instances.List(project, zone.Name)
-			instanceListCall.Filter(strings.Join(options.Filter))
+			instanceListCall := gcloud_ip_lister.service.Instances.List(options.Project, zone.Name)
+			instanceListCall.Filter(options.Filter)
 			instanceList, err := instanceListCall.Do()
 			if err != nil {
 				log.Println("Error", err)
