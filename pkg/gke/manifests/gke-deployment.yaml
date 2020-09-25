@@ -17,7 +17,7 @@ spec:
       serviceAccountName: kubernetes-cloudflare-syncer
       containers:
       - name: kubernetes-cloudflare-syncer
-        image: docker.pkg.github.com/matts966/kubernetes-cloudflare-syncer/gke
+        image: ghcr.io/matts966/kubernetes-cloudflare-syncer/gke:latest
         args:
         - --dns-name=kubernetes.example.com
         env:

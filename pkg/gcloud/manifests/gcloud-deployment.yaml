@@ -9,8 +9,6 @@ spec:
   selector:
     matchLabels:
       app: kubernetes-cloudflare-syncer
-  nodeSelector:
-    kubernetes.io/hostname: gaming-hoge-controller
   template:
     metadata:
       labels:
@@ -19,11 +17,11 @@ spec:
       serviceAccountName: kubernetes-cloudflare-syncer
       containers:
       - name: kubernetes-cloudflare-syncer
-        image: docker.pkg.github.com/matts966/kubernetes-cloudflare-syncer/gcloud
+        image: ghcr.io/matts966/kubernetes-cloudflare-syncer/gcloud:latest
         args:
         - --dns-name=[[[kubernetes.example.com]]]
-        - --projects=[[[your-project]]]
-        - --filters="status = RUNNING"
+        - --project=[[[your-project]]]
+        - --filter="status = RUNNING"
         env:
         - name: CF_API_KEY
           valueFrom:
@@ -37,7 +35,7 @@ spec:
               key: email
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /var/secrets/google/gcp_credentials.json
-          volumeMounts:
+        volumeMounts:
           - name: iplister-gcp-cred
             mountPath: /var/secrets/google
       volumes:

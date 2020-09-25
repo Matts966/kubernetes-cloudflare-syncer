@@ -18,8 +18,6 @@ spec:
   selector:
     matchLabels:
       app: kubernetes-cloudflare-syncer
-  nodeSelector:
-    kubernetes.io/hostname: gaming-hoge-controller
   template:
     metadata:
       labels:
@@ -28,7 +26,7 @@ spec:
       serviceAccountName: kubernetes-cloudflare-syncer
       containers:
       - name: kubernetes-cloudflare-syncer
-        image: docker.pkg.github.com/matts966/kubernetes-cloudflare-syncer/gcloud
+        image: ghcr.io/matts966/kubernetes-cloudflare-syncer/gcloud:latest
         args:
         - --dns-name=[[[kubernetes.example.com]]]
         - --projects=[[[your-project]]]
@@ -55,18 +53,18 @@ spec:
           secretName: iplister-gcp-cred
 ```
 
-**Important:** Make sure to replace `--projects=your-project` and `--dns-name=kubernetes.example.com`. You can use `--filters` flag to filter instances. Use selector such as `nodeSelector` to schedule the syncer on Google Compute Engine by replacing `kubernetes.io/hostname: gaming-hoge-controller`.
+**Important:** Make sure to replace `--projects=your-project` and `--dns-name=kubernetes.example.com`. You can use `--filters` flag to filter instances
 
-
-This syncer needs two types of permissions:
+This syncer needs three types of permissions:
 1. talk to cloudflare and update DNS
 2. get a list of nodes using GCP API and read their IP
+3. Watch for the changes for nodes on Cluster
 
-The former requires just the API keys from cloudflare. We can store them as secret in the cluster by running:
+The first one requires just the API keys from cloudflare. We can store them as secret in the cluster by running:
 
 `kubectl create secret generic cloudflare --from-literal=email=YOUR_CLOUDFLARE_ACCOUNT_EMAIL_ADDRESS_HERE --from-literal=api-key=YOUR_CLOUDFLARE_GLOBAL_API_KEY_HERE`
 
-For the latter you can setup credentials on GCP by commands below.
+For the second one, you can setup credentials on GCP by commands below.
 
 ```bash
 export PROJECT_ID=[[[your-project]]]
@@ -76,10 +74,41 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:iplister@$PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/compute.viewer
 gcloud iam service-accounts keys create gcp_credentials.json \
-  --iam-account example-sa@$PROJECT_ID.iam.gserviceaccount.com
+  --iam-account iplister@$PROJECT_ID.iam.gserviceaccount.com
 kubectl create secret generic iplister-gcp-cred \
   --from-file=gcp_credentials.json=./gcp_credentials.json
 rm ./gcp_credentials.json
+```
+
+For the last one, we create the role below.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubernetes-cloudflare-syncer
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubernetes-cloudflare-syncer
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-cloudflare-syncer-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubernetes-cloudflare-syncer
+subjects:
+- kind: ServiceAccount
+  name: kubernetes-cloudflare-syncer
+  namespace: default
 ```
 
 Applying the config by running:
