@@ -1,4 +1,6 @@
-# Kubernetes Cloudflare Syncer
+![icon](./icon.png)
+
+![ci](https://github.com/Matts966/kubernetes-cloudflare-syncer/workflows/ci/badge.svg)
 
 This repository is inspired by [calebdoxsey/kubernetes-cloudflare-sync](https://github.com/calebdoxsey/kubernetes-cloudflare-sync) and for syncing Cloudflare DNS and any IP addresses list on Kubernetes cluster.
 
